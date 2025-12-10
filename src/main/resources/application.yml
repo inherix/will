@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: Will
+
+
+
+  mongodb:
+    uri: mongodb://localhost:27017/willdb
