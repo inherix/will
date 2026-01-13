@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: will-app-deployment
+  labels:
+    app: will-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: will-app
+  template:
+    metadata:
+      labels:
+        app: will-app
+    spec:
+      containers:
+        - name: will-app-container
+          image: 33155028257.dkr.ecr.us-east-1.amazonaws.com/dev/ope-api:1.0
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: production
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: will-app-service
+  labels:
+    app: will-app
+spec:
+  selector:
+    app: will-app
+  ports:
+    - protocol: TCP
+      port: 5000
+      targetPort: 8081
+  type: LoadBalancer

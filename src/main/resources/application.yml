@@ -5,4 +5,5 @@ spring:
 
 
   mongodb:
-    uri: mongodb://localhost:27017/willdb
+    uri: mongodb+srv://yashwanthbandaru123_db_user:xDhPoQrDghgXCF65@cluster0.mgzlugh.mongodb.net/local-db
+
