@@ -59,6 +59,8 @@ jobs:
          aws-region: ${{ vars.AWS_REGION }}
       - name: Configure EKS
         run: aws eks update-kubeconfig --region ${{vars.AWS_REGION}} --name dev-ope
+      - name: Apply Kubernetes manifests
+        run: kubectl apply -f Spring.yaml
       - name: apply to EKS
         run: kubectl set image deployment/will-app-deployment will-app-container=${{ vars.ECR_REPO }}:${{ needs.build.outputs.image }}
       - name: Verify rollout
