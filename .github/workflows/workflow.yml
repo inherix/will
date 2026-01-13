@@ -34,16 +34,15 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ var.AWS_REGION }}
+          aws-region: ${{ vars.AWS_REGION }}
       - name: login into ECR
-        id: ecr-id
         uses: aws-actions/amazon-ecr-login@v1
       - name: Build Docker image
         run: docker build -t dev/ope-api:${{steps.dockerId.outputs.image-version}} .
       - name: tag image to ECR
-        run: docker tag dev/ope-api:${{steps.dockerId.outputs.image-version}} ${{var.ECR_REPO}}:${{steps.dockerId.outputs.image-version}}
+        run: docker tag dev/ope-api:${{steps.dockerId.outputs.image-version}} ${{vars.ECR_REPO}}:${{steps.dockerId.outputs.image-version}}
       - name: push image to ECR
-        run: docker push ${{var.ECR_REPO}}:${{steps.dockerId.outputs.image-version}}
+        run: docker push ${{vars.ECR_REPO}}:${{steps.dockerId.outputs.image-version}}
 
   deploy:
     needs: build
@@ -55,11 +54,11 @@ jobs:
         with:
          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-         aws-region: ${{ var.AWS_REGION }}
+         aws-region: ${{ vars.AWS_REGION }}
       - name: Configure EKS
-        run: aws eks update-kubeconfig --region ${{var.AWS_REGION}} --name dev-ope
+        run: aws eks update-kubeconfig --region ${{vars.AWS_REGION}} --name dev-ope
       - name: apply to EKS
-        run: kubectl set image deployment/will-app-deployment will-app-container=${{ var.ECR_REPO }}:${{ needs.build.outputs.image }}
+        run: kubectl set image deployment/will-app-deployment will-app-container=${{ vars.ECR_REPO }}:${{ needs.build.outputs.image }}
       - name: Verify rollout
         run: |
           kubectl rollout status deployment/will-app-deployment
