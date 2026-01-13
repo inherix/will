@@ -20,6 +20,11 @@ spec:
           env:
             - name: SPRING_PROFILES_ACTIVE
               value: production
+            - name: javax.net.ssl.trustStore
+              value: "/opt/certs/mongodb-ca.pem"
+            - name: javax.net.ssl.trustStorePassword
+              value: "changeit"
+
 ---
 apiVersion: v1
 kind: Service
