@@ -23,6 +23,11 @@ jobs:
         run: chmod +x ./gradlew
       - name: Build with Gradle
         run: ./gradlew build
+      
+  docker-push:
+    runs-on:
+        ubuntu-latest
+    steps:
       - name: Build docker
         id: dockerId
         run: |
@@ -45,7 +50,6 @@ jobs:
         run: docker tag dev/ope-api:${{steps.dockerId.outputs.image-version}} ${{vars.ECR_REPO}}:${{steps.dockerId.outputs.image-version}}
       - name: push image to ECR
         run: docker push ${{vars.ECR_REPO}}:${{steps.dockerId.outputs.image-version}}
-
   deploy:
     needs: build
     runs-on: ubuntu-latest
