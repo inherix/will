@@ -23,11 +23,11 @@ jobs:
         run: chmod +x ./gradlew
       - name: Build with Gradle
         run: ./gradlew build
-      
   docker-push:
     runs-on:
         ubuntu-latest
     steps:
+
       - name: Build docker
         id: dockerId
         run: |
