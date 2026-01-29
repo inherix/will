@@ -1,6 +1,7 @@
 package com.deft.will.controllers;
 import com.deft.will.dtos.WillFormRequest;
 import com.deft.will.dtos.WillFormResponse;
+import com.deft.will.services.PdfService;
 import com.deft.will.services.WillService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,12 +21,13 @@ import static org.junit.jupiter.api.Assertions.*;
 class BeneficiaryTest {
     @Mock
     private WillService willService;
+    private PdfService pdfService;
 
 
     private WebTestClient webTestClient;
     @BeforeEach
     void setUp() {
-        Beneficiary controller = new Beneficiary(willService);
+        Beneficiary controller = new Beneficiary(willService, pdfService);
         webTestClient = WebTestClient.bindToController(controller).build();
     }
     @Test

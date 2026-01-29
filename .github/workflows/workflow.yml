@@ -23,6 +23,12 @@ jobs:
         run: chmod +x ./gradlew
       - name: Build with Gradle
         run: ./gradlew build
+      - name: Cypress
+        uses: cypress-io/github-action@v6
+        with:
+          start: npm start
+          build: npm run build
+          browser: chrome
       - name: Build docker
         id: dockerId
         run: |

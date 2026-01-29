@@ -7,3 +7,12 @@ spring:
   mongodb:
     uri: mongodb+srv://yashwanthbandaru123_db_user:xDhPoQrDghgXCF65@cluster0.mgzlugh.mongodb.net/local-db
 
+
+aws:
+  access-key: ${AWS_ACCESS_KEY_ID}
+  secret-key: ${AWS_SECRET_ACCESS_KEY}
+
+  s3:
+    bucket: s3-will-bucket
+template:
+  engine: mustache
