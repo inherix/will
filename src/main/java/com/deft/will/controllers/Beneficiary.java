@@ -37,7 +37,9 @@ public class Beneficiary {
 
         @PostMapping("/add/beneficiary")
         public Mono<WillFormResponse> addBeneficiary (@RequestBody WillFormRequest willFormRequest){
+            System.out.println("test");
             return willService.createWill(willFormRequest);
+
         }
 
         @DeleteMapping("/delete/beneficiary/{id}")
