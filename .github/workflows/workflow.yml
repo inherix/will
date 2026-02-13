@@ -59,7 +59,7 @@ jobs:
          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
          aws-region: ${{ vars.AWS_REGION }}
       - name: Configure EKS
-        run: aws eks update-kubeconfig --region ${{vars.AWS_REGION}} --name dev-ope
+        run: aws eks update-kubeconfig --region ${{vars.AWS_REGION}} --name inherix-dev
       - name: Apply Kubernetes manifests
         run: kubectl apply -f Spring.yaml
       - name: apply to EKS
