@@ -44,9 +44,9 @@ jobs:
       - name: Build Docker image
         run: docker build -t dev/ope-api:${{steps.dockerId.outputs.image-version}} .
       - name: tag image to ECR
-        run: docker tag dev/ope-api:${{steps.dockerId.outputs.image-version}} ${{vars.ECR_REPO}}:${{steps.dockerId.outputs.image-version}}
+        run: docker tag inherix-container-registry:${{steps.dockerId.outputs.image-version}} ${{vars.ECR_REPO}}:${{steps.dockerId.outputs.image-version}}
       - name: push image to ECR
-        run: docker push ${{github.event.client_payload.ecr_repo}}:${{steps.dockerId.outputs.image-version}}
+        run: docker push ${{vars.ECR_REPO}}:${{steps.dockerId.outputs.image-version}}
   deploy:
     needs: build
     runs-on: ubuntu-latest
