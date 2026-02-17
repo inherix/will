@@ -12,7 +12,7 @@ import reactor.core.publisher.Mono;
 @Service
 public class WillService {
 
-    private WillRepo repo;
+    private final WillRepo repo;
     public WillService(WillRepo repo){
         this.repo=repo;
     }

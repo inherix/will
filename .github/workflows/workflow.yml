@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - main
+  workflow_call:
 
 jobs:
   build:
@@ -13,6 +14,9 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v4
+        with:
+          repository: inherix/will
+          ref: main
       - name: set up JDK 21
         uses: actions/setup-java@v3
         with:
@@ -40,12 +44,11 @@ jobs:
       - name: login into ECR
         uses: aws-actions/amazon-ecr-login@v1
       - name: Build Docker image
-        run: docker build -t dev/ope-api:${{steps.dockerId.outputs.image-version}} .
+        run: docker build -t inherix-container-registry:${{steps.dockerId.outputs.image-version}} .
       - name: tag image to ECR
-        run: docker tag dev/ope-api:${{steps.dockerId.outputs.image-version}} ${{vars.ECR_REPO}}:${{steps.dockerId.outputs.image-version}}
+        run: docker tag inherix-container-registry:${{steps.dockerId.outputs.image-version}} ${{vars.ECR_REPO}}:${{steps.dockerId.outputs.image-version}}
       - name: push image to ECR
         run: docker push ${{vars.ECR_REPO}}:${{steps.dockerId.outputs.image-version}}
-
   deploy:
     needs: build
     runs-on: ubuntu-latest
@@ -58,7 +61,7 @@ jobs:
          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
          aws-region: ${{ vars.AWS_REGION }}
       - name: Configure EKS
-        run: aws eks update-kubeconfig --region ${{vars.AWS_REGION}} --name dev-ope
+        run: aws eks update-kubeconfig --region ${{vars.AWS_REGION}} --name inherix-dev
       - name: Apply Kubernetes manifests
         run: kubectl apply -f Spring.yaml
       - name: apply to EKS
