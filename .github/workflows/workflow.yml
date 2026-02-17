@@ -32,7 +32,7 @@ jobs:
           IMAGE_VERSION="${YEAR}.${MONTH}.${BUILD}"
           echo "image-version=${IMAGE_VERSION}" >> $GITHUB_OUTPUT
       - name: AWS configure
-        uses: aws-actions/configure-aws-credentials@v2
+        uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
