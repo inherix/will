@@ -5,6 +5,7 @@ import com.deft.will.models.PdfRequest;
 import com.deft.will.services.PdfService;
 import com.deft.will.services.WillService;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -15,6 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 @CrossOrigin(origins = {"http://localhost:5000"})
+@Slf4j
 public class Beneficiary {
 
     private final WillService willService;
